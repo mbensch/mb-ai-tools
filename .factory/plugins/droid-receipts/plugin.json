@@ -1,0 +1,18 @@
+{
+  "name": "droid-receipts",
+  "version": "1.0.0",
+  "description": "Generate visual receipts for Droid sessions with token breakdown and cost estimation",
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${DROID_PLUGIN_ROOT}/hooks/generate-receipt.py",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

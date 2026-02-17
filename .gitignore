@@ -1,0 +1,5 @@
+# Ignore .factory except the plugin
+.factory/*
+!.factory/plugins/
+.factory/plugins/*
+!.factory/plugins/droid-receipts/
