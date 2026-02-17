@@ -20,6 +20,7 @@ Then install plugins:
 droid plugin install droid-receipts@mbensch-droid-plugins
 droid plugin install auto-worktrees@mbensch-droid-plugins
 droid plugin install manual-worktrees@mbensch-droid-plugins
+droid plugin install worktrees@mbensch-droid-plugins
 ```
 
 Or browse available plugins via the UI:
@@ -62,6 +63,17 @@ On-demand git worktree creation and cleanup via slash commands.
 - `/clean-worktrees` - Interactively list and clean up existing worktrees
 - Session isolation with dedicated branches
 - Flexible: use alongside or instead of automatic worktree creation
+
+### worktrees
+
+A skill for systematic git worktree management with smart directory selection and safety verification.
+
+**Features:**
+- Droid-invocable skill for creating isolated worktrees
+- Smart directory selection (`.worktrees/`, `worktrees/`, or `../droid-worktrees/`)
+- Safety verification to ensure directories are gitignored
+- Auto-detection of project setup commands (npm, cargo, pip, go mod)
+- Baseline test verification before starting work
 
 ## Adding New Plugins
 

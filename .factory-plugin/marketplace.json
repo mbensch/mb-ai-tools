@@ -22,6 +22,12 @@
       "description": "On-demand git worktree creation and cleanup via /worktree and /clean-worktrees commands",
       "source": "./plugins/manual-worktrees",
       "category": "developer-tools"
+    },
+    {
+      "name": "worktrees",
+      "description": "A skill for systematic git worktree management with smart directory selection and safety verification",
+      "source": "./plugins/worktrees",
+      "category": "developer-tools"
     }
   ]
 }

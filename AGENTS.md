@@ -50,12 +50,19 @@ mbensch-droid-plugins/
 │   │   ├── hooks/
 │   │   ├── hooks.json
 │   │   └── README.md
-│   └── manual-worktrees/  # On-demand worktree commands
+│   ├── manual-worktrees/   # On-demand worktree commands
+│   │   ├── .factory-plugin/
+│   │   │   └── plugin.json
+│   │   ├── commands/
+│   │   │   ├── worktree.md
+│   │   │   └── clean-worktrees.md
+│   │   └── README.md
+│   └── worktrees/          # Worktree management skill
 │       ├── .factory-plugin/
 │       │   └── plugin.json
-│       ├── commands/
-│       │   ├── worktree.md
-│       │   └── clean-worktrees.md
+│       ├── skills/
+│       │   └── using-worktrees/
+│       │       └── SKILL.md
 │       └── README.md
 └── README.md               # Marketplace docs
 ```
