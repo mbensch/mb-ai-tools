@@ -18,6 +18,8 @@ from pathlib import Path
 
 # Pricing: $1 per 1 million tokens
 PRICE_PER_MILLION = 1.0
+# Cache tokens are billed at 1/10 of standard tokens
+CACHE_PRICE_MULTIPLIER = 0.1
 
 # Output directory for receipts
 RECEIPTS_DIR = Path.home() / ".factory" / "receipts"
@@ -26,6 +28,12 @@ RECEIPTS_DIR = Path.home() / ".factory" / "receipts"
 def format_currency(tokens: int) -> str:
     """Calculate cost at $1/M tokens."""
     cost = tokens / 1_000_000 * PRICE_PER_MILLION
+    return f"${cost:.2f}"
+
+
+def format_cache_currency(tokens: int) -> str:
+    """Calculate cache token cost at 1/10 price."""
+    cost = tokens / 1_000_000 * PRICE_PER_MILLION * CACHE_PRICE_MULTIPLIER
     return f"${cost:.2f}"
 
 
@@ -133,7 +141,16 @@ def generate_html(session_data: dict) -> str:
     output_tokens = tokens.get("outputTokens", 0)
     cache_write = tokens.get("cacheCreationTokens", 0)
     cache_read = tokens.get("cacheReadTokens", 0)
+    
+    # Total tokens for display (sum of all)
     total_tokens = input_tokens + output_tokens + cache_write + cache_read
+    
+    # Total cost: regular tokens at $1/M, cache tokens at $0.10/M
+    total_cost = (
+        (input_tokens + output_tokens) / 1_000_000 * PRICE_PER_MILLION +
+        (cache_write + cache_read) / 1_000_000 * PRICE_PER_MILLION * CACHE_PRICE_MULTIPLIER
+    )
+    total_cost_str = f"${total_cost:.2f}"
     
     # Format date
     try:
@@ -406,7 +423,7 @@ def generate_html(session_data: dict) -> str:
       <div class="item-row">
         <span class="item-label">Cache write</span>
         <span class="qty">{format_number(cache_write)}</span>
-        <span class="price">{format_currency(cache_write)}</span>
+        <span class="price">{format_cache_currency(cache_write)}</span>
       </div>'''
     
     if cache_read > 0:
@@ -414,7 +431,7 @@ def generate_html(session_data: dict) -> str:
       <div class="item-row">
         <span class="item-label">Cache read</span>
         <span class="qty">{format_number(cache_read)}</span>
-        <span class="price">{format_currency(cache_read)}</span>
+        <span class="price">{format_cache_currency(cache_read)}</span>
       </div>'''
     
     html += f'''
@@ -423,7 +440,7 @@ def generate_html(session_data: dict) -> str:
     <div class="total-section">
       <div class="total-row">
         <span>TOTAL</span>
-        <span>{format_currency(total_tokens)}</span>
+        <span>{total_cost_str}</span>
       </div>
     </div>
     
@@ -439,7 +456,7 @@ def generate_html(session_data: dict) -> str:
   <script>
     console.log('Droid Receipt Generated!');
     console.log('Session: {session_short}');
-    console.log('Total: {format_currency(total_tokens)}');
+    console.log('Total: {total_cost_str}');
   </script>
 </body>
 </html>'''
@@ -462,18 +479,23 @@ def generate_svg(session_data: dict) -> str:
     end_time = session_data.get("end_time", datetime.now().isoformat())
     active_time = session_data.get("active_time_ms", 0)
     
-    # Calculate totals - sum ALL tokens for total cost
+    # Calculate totals
     input_tokens = tokens.get("inputTokens", 0)
     output_tokens = tokens.get("outputTokens", 0)
     cache_write = tokens.get("cacheCreationTokens", 0)
     cache_read = tokens.get("cacheReadTokens", 0)
     total_tokens = input_tokens + output_tokens + cache_write + cache_read
     
+    # Costs: regular tokens at $1/M, cache tokens at $0.10/M
     input_cost = format_currency(input_tokens)
     output_cost = format_currency(output_tokens)
-    cache_write_cost = format_currency(cache_write)
-    cache_read_cost = format_currency(cache_read)
-    total_cost = format_currency(total_tokens)
+    cache_write_cost = format_cache_currency(cache_write)
+    cache_read_cost = format_cache_currency(cache_read)
+    total_cost_val = (
+        (input_tokens + output_tokens) / 1_000_000 * PRICE_PER_MILLION +
+        (cache_write + cache_read) / 1_000_000 * PRICE_PER_MILLION * CACHE_PRICE_MULTIPLIER
+    )
+    total_cost = f"${total_cost_val:.2f}"
     
     # Format date
     try:
