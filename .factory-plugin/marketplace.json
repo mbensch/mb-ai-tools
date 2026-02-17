@@ -16,6 +16,12 @@
       "description": "Automatically create and manage git worktrees for Droid sessions, isolating each session on its own branch",
       "source": "./plugins/droid-worktrees",
       "category": "developer-tools"
+    },
+    {
+      "name": "manual-worktrees",
+      "description": "On-demand git worktree creation and cleanup via /worktree and /clean-worktrees commands",
+      "source": "./plugins/manual-worktrees",
+      "category": "developer-tools"
     }
   ]
 }
