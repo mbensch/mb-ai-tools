@@ -1,10 +1,10 @@
-# Droid Plugins
+# MB AI Tools
 
-My personal Factory plugin marketplace - a collection of plugins and tools I've built for Droid.
+A plugin marketplace for **Factory (Droid)** and **Claude Code** -- skills, commands, and hooks that work across both AI coding agents from a single repository.
 
 ## Overview
 
-This is my personal marketplace for distributing plugins I've created. It works as a marketplace for both **Factory (Droid)** and **Claude Code** -- the same repository, two plugin systems.
+This marketplace provides plugins for Jira integration, git worktree management, PR workflows, and session tooling. Most plugins work on both platforms; a few use Droid-specific hooks and are noted as such below.
 
 ## Installation
 
@@ -12,34 +12,21 @@ This is my personal marketplace for distributing plugins I've created. It works 
 
 ```bash
 droid plugin marketplace add https://github.com/mbensch/mb-ai-tools
+droid plugin install pr-tools@mb-ai-tools
+droid plugin install jira-tools@mb-ai-tools
+droid plugin install manual-worktrees@mb-ai-tools
 ```
-
-```bash
-# Core plugins
-droid plugin install droid-receipts@mb-ai-tools
-
-# Choose ONE worktree approach (see Author's Notes below)
-droid plugin install manual-worktrees@mb-ai-tools  # or auto-worktrees
-
-# Optional: enhances worktree handling
-droid plugin install worktrees-skill@mb-ai-tools
-```
-
-Or browse available plugins via the UI: `/plugins`
 
 ### Claude Code
 
 ```bash
 /plugin marketplace add https://github.com/mbensch/mb-ai-tools
-```
-
-```bash
-/plugin install manual-worktrees@mb-ai-tools
-/plugin install worktrees-skill@mb-ai-tools
+/plugin install pr-tools@mb-ai-tools
 /plugin install jira-tools@mb-ai-tools
+/plugin install manual-worktrees@mb-ai-tools
 ```
 
-Or browse available plugins via: `/plugin marketplace list`
+Browse all available plugins: `/plugins` (Droid) or `/plugin marketplace list` (Claude Code).
 
 ## Available Plugins
 
@@ -80,7 +67,7 @@ On-demand git worktree creation via a slash command.
 A skill for systematic git worktree management with smart directory selection and safety verification.
 
 **Features:**
-- Droid-invocable skill for creating isolated worktrees
+- Auto-invoked skill for creating isolated worktrees
 - Smart directory selection (`.worktrees/`, `worktrees/`, or `../droid-worktrees/`)
 - Safety verification to ensure directories are gitignored
 - Auto-detection of project setup commands (npm, cargo, pip, go mod)
